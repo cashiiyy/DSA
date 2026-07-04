@@ -16,6 +16,7 @@ int main() {
     int inter1;
     scanf("%d",&inter1);
     int inter2 = inter1;
+
     //maximum element
     int max=arr[0];
     for (int i=1;i<n;i++) {
@@ -24,11 +25,15 @@ int main() {
         }
     }
     printf("\nMaximum element : %d\n",max);
+
+    //condition if the element is in ending interval
     if (max%inter1!=0) {
         max=max+inter1;
     }
 
     int j=1;
+
+    //interval-frequency
     while (inter1<=max) {
         int count = 0;
         for (int i=0;i<n;i++) {

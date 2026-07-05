@@ -1,2 +1,9 @@
 *.txt
+
 .idea/
+
+.vscode/
+
+.run/
+
+*xml

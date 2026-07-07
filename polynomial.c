@@ -4,14 +4,15 @@ struct polynomial {
     int coef[max];
     int degree[max];
 };
+
 void printpolynomial(struct polynomial poly,int n){
     printf("The polynomial is : \t");
     for (int i=0;i<n;i++) {
         if (poly.coef[i]!=0) {
             printf(" %dx^%d ",poly.coef[i],poly.degree[i]);
-            if (i<n-1){
-                printf("+");
-            }
+        if (i<n-1){
+            printf("+");
+        }
 
         }
 
@@ -33,6 +34,27 @@ int search(int element,int n,int array[]) {
     }
     else {
         return -1;
+    }
+
+}
+
+void sort(struct polynomial poly,int n) {
+    int temp1,temp2;
+    for (int i=0;i<n-1;i++) {
+        for (int j=0;j<n-i-1;j++) {
+            if (poly.degree[j]<poly.degree[j+1]) {
+
+                temp1=poly.degree[j];
+                temp2=poly.coef[j];
+
+                poly.degree[j]=poly.degree[j+1];
+                poly.coef[j]=poly.coef[j+1];
+
+                poly.degree[j+1]=temp1;
+                poly.coef[j+1]=temp2;
+            }
+        }
+
     }
 
 }
@@ -68,7 +90,7 @@ int main() {
         scanf("%d",&poly2.coef[i]);
     }
 
-    //initialising with poly3 with zero
+    //initializing with poly3 with zero
     for (int i=0;i<n+m;i++) {
         poly3.degree[i]=0;
         poly3.coef[i]=0;
@@ -110,6 +132,7 @@ int main() {
         }
     }
 
+    sort(poly3,n+m);
     printpolynomial(poly3,n+m);
     return 0;
 }

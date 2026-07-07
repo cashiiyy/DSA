@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define max 10
+#define max 5
 struct polynomial {
     int coef[max];
     int degree[max];
@@ -17,35 +17,25 @@ void printpolynomial(struct polynomial poly,int n){
 
 }
 int search(int element,int n,int array[]) {
-    int l=0;
+    int l=-1;
     for (int i=0;i<n;i++) {
         if (array[i]==element) {
             l=i;
         }
     }
-    if (l==0) {
-        return 0;
-    }
-    else {
+    if (l>=0) {
         return l;
     }
-
-}
-
-void sum(struct polynomial poly1,int n,struct polynomial poly2,int m,struct polynomial poly3) {
-    for (int i=0;i<n;i++) {
-        if ((search(poly1.degree[i],m,poly2.degree))!=0) {
-            poly3.coef[i]=poly1.coef[i]+poly2.coef[search(poly1.degree[i],n,poly2.degree)];
-        }
-        else {
-            poly3.coef[i]=poly1.coef[i];
-        }
+    else {
+        return -1;
     }
 
 }
+
 
 int main() {
     struct polynomial poly1,poly2,poly3;
+
 
     //read1
     int n;
@@ -74,10 +64,37 @@ int main() {
         scanf("%d",&poly2.coef[i]);
     }
 
+    //initialising with zero
+    for (int i=0;i<n+m;i++) {
+        poly3.degree[i]=0;
+        poly3.coef[i]=0;
+    }
+
+
     printpolynomial(poly1,n);
     printpolynomial(poly2,m);
 
-    // sum(poly1,n,poly2,m,poly3);
-    // printpolynomial(poly3,n);
+    //sum
+    for (int i=0;i<n;i++) {
+        if ((search((poly1.degree[i]),m,poly2.degree))>=0) {
+            int l = search((poly1.degree[i]),m,poly2.degree);
+            printf("\n%d\n",l);
+            poly3.degree[i]=poly1.degree[i];
+            poly3.coef[i]=poly1.coef[i]+poly2.coef[l];
+            poly2.degree[l]=0;
+            poly2.coef[l]=0;
+        }
+        else {
+            poly3.coef[i]=poly1.coef[i];
+            poly3.degree[i]=poly1.degree[i];
+        }
+    }
+
+
+
+
+
+
+    printpolynomial(poly3,m);
     return 0;
 }

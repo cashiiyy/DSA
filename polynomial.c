@@ -1,5 +1,5 @@
 #include <stdio.h>
-#define max 5
+#define max 10
 struct polynomial {
     int coef[max];
     int degree[max];
@@ -7,15 +7,20 @@ struct polynomial {
 void printpolynomial(struct polynomial poly,int n){
     printf("The polynomial is : \t");
     for (int i=0;i<n;i++) {
-        printf(" %dx^%d ",poly.coef[i],poly.degree[i]);
-        if (i<n-1){
-            printf("+");
+        if (poly.coef[i]!=0) {
+            printf(" %dx^%d ",poly.coef[i],poly.degree[i]);
+            if (i<n-1){
+                printf("+");
+            }
+
         }
+
         
     }
     printf("\n");
 
 }
+
 int search(int element,int n,int array[]) {
     int l=-1;
     for (int i=0;i<n;i++) {
@@ -32,10 +37,8 @@ int search(int element,int n,int array[]) {
 
 }
 
-
 int main() {
     struct polynomial poly1,poly2,poly3;
-
 
     //read1
     int n;
@@ -50,6 +53,7 @@ int main() {
         printf("Enter the coefficient of x^%d: ",poly1.degree[i]);
         scanf("%d",&poly1.coef[i]);
     }
+
     //read2
     int m;
     printf("Enter the no: of terms : ");
@@ -64,7 +68,7 @@ int main() {
         scanf("%d",&poly2.coef[i]);
     }
 
-    //initialising with zero
+    //initialising with poly3 with zero
     for (int i=0;i<n+m;i++) {
         poly3.degree[i]=0;
         poly3.coef[i]=0;
@@ -78,7 +82,6 @@ int main() {
     for (int i=0;i<n;i++) {
         if ((search((poly1.degree[i]),m,poly2.degree))>=0) {
             int l = search((poly1.degree[i]),m,poly2.degree);
-            printf("\n%d\n",l);
             poly3.degree[i]=poly1.degree[i];
             poly3.coef[i]=poly1.coef[i]+poly2.coef[l];
             poly2.degree[l]=0;
@@ -89,12 +92,24 @@ int main() {
             poly3.degree[i]=poly1.degree[i];
         }
     }
+    int k=n;
+    for (int i=0;i<m;i++) {
+        {
+            if (poly2.degree[i]!=0) {
+                    {
+                        for (int j=k;j<max;j++) {
+                            poly3.degree[j]=poly2.degree[i];
+                            poly3.coef[j]=poly2.coef[i];
+                            k++;
+                            break;
+                        }
 
+                    }
 
+            }
+        }
+    }
 
-
-
-
-    printpolynomial(poly3,m);
+    printpolynomial(poly3,n+m);
     return 0;
 }

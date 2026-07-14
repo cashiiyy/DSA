@@ -22,7 +22,7 @@ int isEmpty(char array[],int top) {
 int main() {
     char st[max];
     int top=-1;
-    char string[max]="((a+b)*(b)*c))";
+    char string[max]="(a+b)*(b)*c";
     int l=0;
     while (string[l]!='\0') {
         if (string[l]=='(') {

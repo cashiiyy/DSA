@@ -25,6 +25,20 @@ void print(terms a[]) {
     }
 }
 
+void transpose(terms a[],terms b[]) {
+    int n,i,j;
+    n=a[0].val;
+    b[0].row=a[0].col;
+    b[0].col=a[0].row;
+    b[0].val=n;
+    for (i=1;i<=n;i++) {
+        b[i].row=a[i].col;
+        b[i].col=a[i].row;
+        b[i].val=a[i].val;
+    }
+
+}
+
 void sum(terms a[], terms b[], terms result[]) {
     if (a[0].row != b[0].row || a[0].col != b[0].col) {
         printf("Error: Matrix dimensions do not match!\n");

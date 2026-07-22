@@ -1,5 +1,6 @@
 #include <stdio.h>
 #define max 20
+int top = -1;
 int peek(char array[],int top) {
     return array[top];
 }
@@ -19,8 +20,7 @@ int isEmpty(char array[],int top) {
         return 0;
     }
 }
-char
-pop(char array[],int top1) {
+char pop(char array[],int top1) {
     if (top1==-1) {
         return -1;
     }
@@ -33,7 +33,6 @@ pop(char array[],int top1) {
 }
 int main() {
     char st[max];
-    int top=-1;
     char string[max]="(a+b+{c*d}-[c/f]*c)";
     int l=0;
     while (string[l]!='\0') {

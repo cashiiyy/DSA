@@ -10,7 +10,15 @@ void print(int arr[],int n) {
     printf("\n");
 
 }
-
+int max(int arr[],int n) {
+    int max1=arr[1];
+    for (int i=1; i <= n; i++) {
+        if (arr[i] > max1) {
+            max1 = arr[i];
+        }
+    }
+    return max1;
+}
 
 int main() {
     int n,q;
@@ -58,5 +66,7 @@ int main() {
     }
     printf("\nFINAL\n");
     print(arr,n);
+    printf("\n");
+    printf("%d\n",max(arr,n));
     return 0;
 }

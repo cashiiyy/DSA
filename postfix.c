@@ -65,7 +65,8 @@ int eval(int x,int y,char s) {
     }
 }
 int main() {
-    char str[MAX] = "(a+(b*c)/d)";
+    char str[MAX] = "(a+(b*c)/d)"
+                    "";
     char post[MAX];
     int i = 0, p = 0;
 

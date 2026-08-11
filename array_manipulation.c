@@ -1,18 +1,18 @@
-#include <stdio.h>
+//created for hackerrank array_manipulation(hard)
 
+#include <stdio.h>
+#include <stdlib.h>
 void print(int arr[],int n) {
     //printing array
-    printf("[");
     for (int i=1; i <= n; i++) {
         printf("%d ",arr[i]);
     }
-    printf("]");
     printf("\n");
 
 }
-int max(int arr[],int n) {
-    int max1=arr[1];
-    for (int i=1; i <= n; i++) {
+long int max(long long arr[],long int n) {
+    long int max1=arr[1];
+    for (long int i=1; i <= n; i++) {
         if (arr[i] > max1) {
             max1 = arr[i];
         }
@@ -21,31 +21,27 @@ int max(int arr[],int n) {
 }
 
 int main() {
-    int n,q;
-    scanf("%d %d",&n,&q);
-    int arr[n+1];
+    long int n,q;
+    scanf("%lld %lld",&n,&q);
+    long long *arr = (long long *)calloc(n + 2, sizeof(long long));
 
-    int qr[3][q];
+    long int qr[3][q];
 
-    printf("Enter number of elements in array\n");
     //reading queries
     for (int i = 0; i < q; i++) {
         for (int j = 0; j < 3; j++) {
-            scanf("%d",&qr[j][i]);
+            scanf("%lld",&qr[j][i]);
         }
     }
 
     //printing queries
-    for (int i = 0; i < q; i++) {
-        printf("[");
-        for (int j = 0; j < 3; j++) {
-            printf("%d ,",qr[j][i]);
-        }
-        printf("]");
-        printf("\n");
-    }
+    // for (int i = 0; i < q; i++) {
+    //     for (int j = 0; j < 3; j++) {
+    //         printf("%d ",qr[j][i]);
+    //     }
+    //     printf("\n");
+    // }
 
-    printf("\n");
 
     //initialising with 0
     for (int i = 1; i <= n; i++) {
@@ -53,20 +49,19 @@ int main() {
     }
 
     //using queries to add to array
-    print(arr,n);
+    //print(arr,n);
     int j=0;
-    int k=0;
+    long int k=0;
     while (j<q) {
         for (k = qr[0][j]; k <= qr[1][j];k++) {
             arr[k]=arr[k]+qr[2][j];
 
         }
-        print(arr,n);
+        // print(arr,n);
         j++;
     }
-    printf("\nFINAL\n");
-    print(arr,n);
-    printf("\n");
-    printf("%d\n",max(arr,n));
+    //print(arr,n);
+    printf("%lld",max(arr,n));
+    free(arr);
     return 0;
 }

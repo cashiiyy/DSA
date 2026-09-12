@@ -60,7 +60,11 @@ void print(struct node **head) {
     printf("The polynomial is : \t");
     while (ptr != NULL) {
         if (ptr->coef!=0) {
-            printf(" %dx^%d +",ptr->coef,ptr->exp);
+            printf(" %dx^%d",ptr->coef,ptr->exp);
+        }
+        if (ptr->next!=NULL && ptr->next->coef!=0)
+        {
+            printf(" +");
         }
         ptr=ptr->next;
     }

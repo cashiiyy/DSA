@@ -4,13 +4,13 @@
 typedef struct Node
 {
     struct Node *lchild; // Fixed: Changed 'node' to 'Node'
-    int data;
+    char data;
     struct Node *rchild; // Fixed: Changed 'node' to 'Node'
 } Node;
 
-Node* Createnode(int data)
+Node* Createnode(char data)
 {
-    // Fixed: Properly allocated heap memory
+    // Properly allocated heap memory
     Node* temp = (Node*)malloc(sizeof(Node));
     if (temp == NULL) {
         printf("Memory allocation failed!\n");
@@ -22,7 +22,7 @@ Node* Createnode(int data)
     return temp;
 }
 
-Node* BuildTree(Node* root, int data)
+Node* BuildTree(Node* root, char data)
 {
     char dir;
     if (root == NULL)
@@ -36,10 +36,12 @@ Node* BuildTree(Node* root, int data)
 
     if (dir == 'L' || dir == 'l')
     {
+        // Adds to Left Child of current root
         root->lchild = BuildTree(root->lchild, data);
     }
     else if (dir == 'R' || dir == 'r')
     {
+        // Adds to Right Child of current root
         root->rchild = BuildTree(root->rchild, data);
     }
     else
@@ -49,20 +51,39 @@ Node* BuildTree(Node* root, int data)
     return root;
 }
 
-void PrintTree(Node* root)
+void Print_IO(Node* root)//IN_order
 {
     if (root == NULL)
         return;
-    PrintTree(root->lchild);
-    printf("%d ", root->data); // Fixed: Changed %c to %d for integer data
-    PrintTree(root->rchild);
+    Print_IO(root->lchild);//left
+    printf("%c ", root->data);//root
+    Print_IO(root->rchild);//right
+}
+
+void Print_PostO(Node* root)
+{
+    if (root == NULL)
+        return;
+    Print_PostO(root->lchild);//left
+    Print_PostO(root->rchild);//right
+    printf("%c ", root->data);//root
+}
+
+void Print_PreO(Node* root)
+{
+    if (root == NULL)
+        return;
+    printf("%c ", root->data);//root
+    Print_PreO(root->lchild);//left
+    Print_PreO(root->rchild);//right
 }
 
 int main()
 {
     Node* root = NULL; // Fixed: Initialize to NULL so BuildTree can handle root creation cleanly
     char ch;
-    int data;
+    // FIX: Changed 'int data' to 'char data' to match Node structure
+    char data;
 
     while (1)
     {
@@ -72,7 +93,8 @@ int main()
         if (ch == 'Y' || ch == 'y')
         {
             printf("ENTER THE DATA : ");
-            scanf("%d", &data);
+            scanf(" %c", &data);
+            // This call properly adds a node to the left (L) or right (R) of the current root's children
             root = BuildTree(root, data);
         }
         else if (ch == 'N' || ch == 'n')
@@ -86,7 +108,11 @@ int main()
     }
 
     printf("\n----BINARY TREE (In-Order Traversal)----\n");
-    PrintTree(root);
+    Print_IO(root);
+    printf("\n----BINARY TREE (Post-Order Traversal)----\n");
+    Print_PostO(root);
+    printf("\n----BINARY TREE (Pre-Order Traversal)----\n");
+    Print_PreO(root);
     printf("\n");
 
     return 0;
